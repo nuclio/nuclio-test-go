@@ -14,7 +14,7 @@ import (
 )
 
 func TestName(t *testing.T) {
-	// data binding for V3IO data containers, optional 
+	// data binding for V3IO data containers, optional (use nil instead of &data)
 	data := nutest.DataBind{Name:"db0", Url:"<v3io address>", Container:"x"}
 
 	// Create TestContext and specify the function name, verbose, data 
@@ -47,8 +47,8 @@ import (
 )
 
 func main() {
-	// data binding for V3IO data containers, optional 
-	data := nutest.DataBind{Name:"db0", Url:"192.168.1.1", Container:"x"}
+	// data binding for V3IO data containers, optional (use nil instead of &data)
+	data := nutest.DataBind{Name:"db0", Url:""<v3io address>", Container:"x"}
 
 	// Create TestContext and specify the function name, verbose, data 
 	tc, err := nutest.NewTestContext(MyHandler, true, &data )
