@@ -9,7 +9,6 @@ package main
 
 import (
 	"testing"
-	"github.com/nuclio/nuclio-sdk-go"
 	"github.com/nuclio/nuclio-test-go"
 )
 
@@ -42,7 +41,6 @@ func TestName(t *testing.T) {
 package main
 
 import (
-	"github.com/nuclio/nuclio-sdk-go"
 	"github.com/nuclio/nuclio-test-go"
 )
 
