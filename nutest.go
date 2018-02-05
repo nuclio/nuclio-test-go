@@ -30,7 +30,7 @@ func NewTestContext(function func(context *nuclio.Context, event nuclio.Event)(i
 	if verbose {
 		newTest.LogLevel = nucliozap.DebugLevel
 	} else {
-		newTest.LogLevel = nucliozap.InfoLevel
+		newTest.LogLevel = nucliozap.WarnLevel
 	}
 
 	logger, err := nucliozap.NewNuclioZapCmd("emulator", newTest.LogLevel)
