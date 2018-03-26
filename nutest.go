@@ -69,6 +69,10 @@ type TestContext struct {
 	function  func(context *nuclio.Context, event nuclio.Event)(interface {}, error)
 }
 
+func (tc *TestContext) InitContext(function func(context *nuclio.Context) error) error {
+	return function(&tc.context)
+}
+
 func (tc *TestContext) Invoke(event nuclio.Event) (interface{}, error) {
 
 	body, err := tc.function(&tc.context, event)

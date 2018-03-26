@@ -22,6 +22,13 @@ func TestName(t *testing.T) {
 		t.Fail()
 	}
 
+	// Optional, initialize context must have a function in the form:
+	//    InitContext(context *nuclio.Context) error
+	err = tc.InitContext(InitContext)
+	if err != nil {
+		t.Fail()
+	}
+
 	// Create a new test event 
 	testEvent := nutest.TestEvent{
 		Path: "/some/path",
