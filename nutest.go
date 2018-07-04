@@ -42,7 +42,7 @@ func NewTestContext(function func(context *nuclio.Context, event nuclio.Event)(i
 
 	db := map[string]nuclio.DataBinding{}
 	if data != nil {
-		container, err := createContainer(logger, data.Url, data.Container)
+		container, err := createContainer(logger, data)
 		if err != nil {
 			logger.ErrorWith("Failed to createContainer", "err", err)
 			return nil, errors.Wrap(err, "Failed to createContainer")
@@ -85,21 +85,21 @@ func (tc *TestContext) Invoke(event nuclio.Event) (interface{}, error) {
 	return body, err
 }
 
-func createContainer(logger logger.Logger, addr, cont string) (*v3io.Container, error) {
+func createContainer(logger logger.Logger, db *DataBind) (*v3io.Container, error) {
 	// create context
-	context, err := v3io.NewContext(logger, addr , 8)
+	context, err := v3io.NewContext(logger, db.Url , 8)
 	if err != nil {
 		return nil, errors.Wrap(err, "Failed to create client")
 	}
 
 	// create session
-	session, err := context.NewSession("", "", "v3test")
+	session, err := context.NewSession(db.User, db.Password, "v3test")
 	if err != nil {
 		return nil, errors.Wrap(err, "Failed to create session")
 	}
 
 	// create the container
-	container, err := session.NewContainer(cont)
+	container, err := session.NewContainer(db.Container)
 	if err != nil {
 		return nil, errors.Wrap(err, "Failed to create container")
 	}
