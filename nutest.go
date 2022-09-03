@@ -34,7 +34,7 @@ func NewTestContext(function func(context *nuclio.Context, event nuclio.Event)(i
 		newTest.LogLevel = nucliozap.WarnLevel
 	}
 
-	logger, err := nucliozap.NewNuclioZapCmd("emulator", newTest.LogLevel, , os.Stdout)
+	logger, err := nucliozap.NewNuclioZapCmd("emulator", newTest.LogLevel, os.Stdout)
 	if err != nil {
 		return nil, errors.Wrap(err, "Failed to create logger")
 	}
@@ -84,6 +84,10 @@ func (tc *TestContext) Invoke(event nuclio.Event) (interface{}, error) {
 	tc.Logger.InfoWith("Function completed","output",body)
 
 	return body, err
+}
+
+func (tc *TestContext) GetContext() nuclio.Context {
+	return tc.context
 }
 
 func createContainer(logger logger.Logger, db *DataBind) (*v3io.Container, error) {
