@@ -17,6 +17,7 @@ limitations under the License.
 package nutest
 
 import (
+	"os"
 	"github.com/nuclio/zap"
 	"github.com/nuclio/nuclio-sdk-go"
 	"github.com/v3io/v3io-go-http"
@@ -33,7 +34,7 @@ func NewTestContext(function func(context *nuclio.Context, event nuclio.Event)(i
 		newTest.LogLevel = nucliozap.WarnLevel
 	}
 
-	logger, err := nucliozap.NewNuclioZapCmd("emulator", newTest.LogLevel)
+	logger, err := nucliozap.NewNuclioZapCmd("emulator", newTest.LogLevel, , os.Stdout)
 	if err != nil {
 		return nil, errors.Wrap(err, "Failed to create logger")
 	}
@@ -54,7 +55,7 @@ func NewTestContext(function func(context *nuclio.Context, event nuclio.Event)(i
 		db[data.Name] = container
 	}
 
-	newTest.context = nuclio.Context{Logger:logger, DataBinding:db}
+	newTest.context = nuclio.Context{Logger:logger, DataBinding:db, Platform: &nuclio.Platform{}}
 	newTest.function = function
 
 
